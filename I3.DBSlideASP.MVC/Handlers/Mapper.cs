@@ -20,5 +20,14 @@ namespace I3.DBSlideASP.MVC.Handlers
                 Section_id = student.Section_ID
             };
         }
+        public static StudentNames ToNames(this Student student)
+        {
+            if (student is null) return null;
+            return new StudentNames
+            {
+                Nom = student.Last_Name,
+                Prenom = student.First_Name
+            };
+        }
     }
 }
