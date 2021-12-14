@@ -31,7 +31,7 @@ namespace I3.DBSlideASP.MVC.Controllers
         /// <param name="id">Identifiant d'un student</param>
         /// <returns></returns>
         public IActionResult Delete(int id)
-         {
+        {
             StudentNames student = service.Get(id).ToNames();
             if (!(student is null))
             {
@@ -44,6 +44,13 @@ namespace I3.DBSlideASP.MVC.Controllers
             //url :  /Home/Error/
 
             //return RedirectToAction("Error", "Home");
+        }
+
+        public IActionResult Details(int id)
+        {
+            StudentDetails student = service.Get(id).ToDetails();
+            if(student is not null) return View(student);
+            return RedirectToAction("Index");
         }
     }
 }
