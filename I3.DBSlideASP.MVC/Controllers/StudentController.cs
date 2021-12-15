@@ -78,6 +78,7 @@ namespace I3.DBSlideASP.MVC.Controllers
                 form.Course_ids = service.Get().Select(s => s.Course_ID).Distinct().OrderBy(c => c);
                 return View(form);
             }
+            service.Insert(form.ToDTO());
             return RedirectToAction("Index");
         }
 

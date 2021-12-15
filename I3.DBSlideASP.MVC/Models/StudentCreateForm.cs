@@ -30,5 +30,13 @@ namespace I3.DBSlideASP.MVC.Models
         //Utilisé lors de l'affichage
         public IEnumerable<int> Section_ids { get; set; }
         public IEnumerable<string> Course_ids { get; set; }
+
+        //Utilisé pour le mapper
+        public string Identifiant { get
+            {
+                if (string.IsNullOrWhiteSpace(this.Nom) || string.IsNullOrWhiteSpace(this.Prenom)) throw new FormatException();
+                return this.Prenom[0] + this.Nom.Substring(0, 5).Replace(' ', '.');
+            } 
+        }
     }
 }
