@@ -22,6 +22,8 @@ namespace I3.DBSlideASP.MVC.Controllers
         public IActionResult Index()
         {
             IEnumerable<StudentListItem> students = service.Get().Select(s => s.ToListItem());
+            //ViewBag.number = students.Count();
+            //ViewData["number"] = students.Count();
             return View(students);
         }
         /// <summary>
@@ -51,6 +53,11 @@ namespace I3.DBSlideASP.MVC.Controllers
             StudentDetails student = service.Get(id).ToDetails();
             if(student is not null) return View(student);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

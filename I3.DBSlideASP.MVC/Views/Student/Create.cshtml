@@ -1,0 +1,45 @@
+﻿<form method="post">
+    <div>
+        @*l'attribut for du label pointe vers l'objet ayant un id équivalant*@
+        <label for="Nom">
+            Nom :
+        </label>
+        @*l'attribut name de notre formulaire récupère l'information à faire passer dans la propriété du model ayant le même nom*@
+        <input type="text" name="Nom" id="Nom" minlength="2" maxlength="16" />
+    </div>
+    <div>
+        <label for="Prenom">
+            Prenom :
+        </label>
+        <input type="text" name="Prenom" id="Prenom" minlength="2" maxlength="16" />
+    </div>
+    <div>
+        <label for="DateNaissance">
+            Date de naissance :
+        </label>
+        <input type="date" name="DateNaissance" id="DateNaissance"/>
+    </div>
+    <div>
+        <label for="ResultatAnnuel">
+            Résultat annuel:
+        </label>
+        <input type="number" min="0" max="20" name="ResultatAnnuel" id="ResultatAnnuel"/>
+    </div>
+    <div>
+        <label for="Section_id">
+            Section : 
+        </label>
+        <select name="Section_id" id="Section_id"/>
+        </select>
+    </div>
+    <div>
+        <label for="Course_id">
+            Course : 
+        </label>
+        <select name="Course_id" id="Course_id"/>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Ajouter l'étudiant" />
+    </div>
+</form>
