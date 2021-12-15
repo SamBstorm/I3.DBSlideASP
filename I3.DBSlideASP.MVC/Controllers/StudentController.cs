@@ -3,6 +3,7 @@ using DBSlideDataContext.Services;
 using I3.DBSlideASP.MVC.Handlers;
 using I3.DBSlideASP.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,34 @@ namespace I3.DBSlideASP.MVC.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            StudentCreateForm model = new StudentCreateForm();
+            model.Section_ids = service.Get().Select(s => s.Section_ID).Distinct().OrderBy(s => s);
+            ////SI votre propriétés est une List<int> alors on fini par ToList();
+            //model.Section_ids = service.Get().Select(s => s.Section_ID).Distinct().ToList();
+            ////SI votre propriétés est un int[] alors on fini par ToArray();
+            //model.Section_ids = service.Get().Select(s => s.Section_ID).Distinct().ToArray();
+            model.Course_ids = service.Get().Select(s => s.Course_ID).Distinct().OrderBy(c => c);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Create(StudentCreateForm form)
+        {
+            ValidateYearsOld(form, ModelState, 18);
+            if (!ModelState.IsValid)
+            {
+                form.Section_ids = service.Get().Select(s => s.Section_ID).Distinct().OrderBy(s => s);
+                form.Course_ids = service.Get().Select(s => s.Course_ID).Distinct().OrderBy(c => c);
+                return View(form);
+            }
+            return RedirectToAction("Index");
+        }
+
+        private static void ValidateYearsOld(StudentCreateForm form, ModelStateDictionary modelState, int yearsOld ) {
+
+            int currentYear = DateTime.Now.Year;
+            int age = currentYear - form.DateNaissance.Year;
+            if (age < yearsOld) modelState.AddModelError(nameof(form.DateNaissance), $"Vous n'avez pas encore {yearsOld} ans...");
         }
     }
 }

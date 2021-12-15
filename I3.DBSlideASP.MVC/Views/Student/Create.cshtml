@@ -1,45 +1,65 @@
-﻿<form method="post">
+﻿@using I3.DBSlideASP.MVC.Models
+@model StudentCreateForm
+
+@if (Model is not null)
+{
+<form method="post">
     <div>
         @*l'attribut for du label pointe vers l'objet ayant un id équivalant*@
         <label for="Nom">
             Nom :
         </label>
         @*l'attribut name de notre formulaire récupère l'information à faire passer dans la propriété du model ayant le même nom*@
-        <input type="text" name="Nom" id="Nom" minlength="2" maxlength="16" />
+        <input type="text" name="Nom" id="Nom" minlength="2" maxlength="16" required/>
     </div>
     <div>
         <label for="Prenom">
             Prenom :
         </label>
-        <input type="text" name="Prenom" id="Prenom" minlength="2" maxlength="16" />
+        <input type="text" name="Prenom" id="Prenom" minlength="2" maxlength="16" required/>
     </div>
     <div>
         <label for="DateNaissance">
             Date de naissance :
         </label>
-        <input type="date" name="DateNaissance" id="DateNaissance"/>
+        <input type="date" name="DateNaissance" id="DateNaissance" required/>
     </div>
     <div>
         <label for="ResultatAnnuel">
             Résultat annuel:
         </label>
-        <input type="number" min="0" max="20" name="ResultatAnnuel" id="ResultatAnnuel"/>
+        <input type="number" min="0" max="20" name="ResultatAnnuel" id="ResultatAnnuel" required/>
     </div>
     <div>
         <label for="Section_id">
             Section : 
         </label>
-        <select name="Section_id" id="Section_id"/>
+        <select name="Section_id" id="Section_id" required>
+            @foreach (int s_id in Model.Section_ids)
+            {
+                <option>@s_id</option>
+            }
         </select>
     </div>
     <div>
         <label for="Course_id">
             Course : 
         </label>
-        <select name="Course_id" id="Course_id"/>
+        <select name="Course_id" id="Course_id" required>
+            @foreach (string c_id in Model.Course_ids)
+            {
+                <option>@c_id</option>
+            }
         </select>
     </div>
     <div>
         <input type="submit" value="Ajouter l'étudiant" />
     </div>
 </form>
+}
+else
+{
+    <div>
+        <p>Erreur avec le modèle</p>
+    </div>
+}
