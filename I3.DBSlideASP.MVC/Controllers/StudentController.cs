@@ -65,6 +65,7 @@ namespace I3.DBSlideASP.MVC.Controllers
             ////SI votre propriétés est un int[] alors on fini par ToArray();
             //model.Section_ids = service.Get().Select(s => s.Section_ID).Distinct().ToArray();
             model.Course_ids = service.Get().Select(s => s.Course_ID).Distinct().OrderBy(c => c);
+            model.DateNaissance = DateTime.Now;
             return View(model);
         }
 

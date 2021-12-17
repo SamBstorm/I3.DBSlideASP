@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,19 +13,26 @@ namespace I3.DBSlideASP.MVC.Models
         [Required(ErrorMessage ="Ce champs est obligatoire.")]
         [StringLength(maximumLength : 16, MinimumLength = 2, ErrorMessage ="La taille doit être comprise entre 2 et 16")]
         //[RegularExpression(@"(\D)")]
+        [DisplayName("Nom : ")]
         public string Nom { get; set; }
         [Required(ErrorMessage = "Ce champs est obligatoire.")]
         [MinLength(2, ErrorMessage ="La taille minimum est de 2.")]
         [MaxLength(16, ErrorMessage = "La taille maximum est de 16.")]
+        [DisplayName("Prénom : ")]
         public string Prenom { get; set; }
         [Required(ErrorMessage ="Ce champs est obligatoire.")]
+        [DisplayName("Date de naissance : ")]
+        [DataType(DataType.Date)]
         public DateTime DateNaissance { get; set; }
         [Required(ErrorMessage ="Ce champs est obligatoire.")]
         [Range(0,20, ErrorMessage ="Le résultat annuel doit être compris entre 0 et 20.")]
+        [DisplayName("Résultat annuel : ")]
         public ushort ResultatAnnuel { get; set; }
         [Required(ErrorMessage ="Ce champs est obligatoire.")]
+        [DisplayName("Section : ")]
         public int Section_id { get; set; }
         [Required(ErrorMessage = "Ce champs est obligatoire.")]
+        [DisplayName("Cours : ")]
         public string Course_id { get; set; }
 
         //Utilisé lors de l'affichage

@@ -2,96 +2,68 @@
 @using Microsoft.AspNetCore.Mvc.ModelBinding
 @model StudentCreateForm
 
-@{ 
-    void CheckErrors(string tagName)
-    {
-        ModelStateEntry modelStateEntry;
-
-        if (!ViewContext.ModelState.IsValid && ViewContext.ModelState.TryGetValue(tagName, out modelStateEntry))
-        {
-        <span style="color:white; background-color:red">
-            @foreach (var error in modelStateEntry.Errors)
-            {
-                @error.ErrorMessage<br/>
-            }
-        </span>
-            }
-        }
-    }
 @if (Model is not null)
 {
 
 
-@if (!ViewContext.ModelState.IsValid)
-{
-    <div>
-        Le formulaire contient @ViewContext.ModelState.ErrorCount erreur(s).
-    </div>
-}
-<form method="post">
-    <div>
-        @*l'attribut for du label pointe vers l'objet ayant un id équivalant*@
-        <label for="Nom">
-            Nom :
-        </label>
-        @*l'attribut name de notre formulaire récupère l'information à faire passer dans la propriété du model ayant le même nom*@
-        <input type="text" name="Nom" id="Nom" minlength="2" maxlength="16" required/>
-        @{ CheckErrors("Nom"); }
-    </div>
-    <div>
-        <label for="Prenom">
-            Prenom :
-        </label>
-        <input type="text" name="Prenom" id="Prenom" minlength="2" maxlength="16" required />
-        @{ CheckErrors("Prenom"); }
+    @if (!ViewContext.ModelState.IsValid)
+    {
+        @Html.ValidationSummary(true,
+            "Le formulaire contient "+ViewContext.ModelState.ErrorCount+ "erreur(s).",
+            new { @class ="text-danger" }
+            )
+    }
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(m => m.Nom)
+            @Html.EditorFor(m => m.Nom, new { htmlAttributes = new { @class = "form-control", minlength = 2, maxlength = 16, required = true } })
+            @Html.ValidationMessageFor(m => m.Nom, null, new { @class = "text-danger" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Prenom)
+            @Html.EditorFor(m => m.Prenom, new { htmlAttributes = new { @class = "form-control", minlength = 2, maxlength = 16, required = true } })
+            @Html.ValidationMessageFor(m => m.Prenom, null, new { @class = "text-danger" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DateNaissance)
+            @Html.EditorFor(m => m.DateNaissance, new { htmlAttributes = new { @class = "form-control", required = true } })
+            @Html.ValidationMessageFor(m => m.DateNaissance, null, new { @class = "text-danger" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.ResultatAnnuel)
+            @Html.EditorFor(m => m.ResultatAnnuel, new { htmlAttributes = new { @class = "form-control", min = 0, max = 20, required = true } })
+            @Html.ValidationMessageFor(m => m.ResultatAnnuel, null, new { @class = "text-danger" })
 
-    </div>
-    <div>
-        <label for="DateNaissance">
-            Date de naissance :
-        </label>
-        <input type="date" name="DateNaissance" id="DateNaissance" required />
-        @{ CheckErrors("DateNaissance"); }
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Section_id)
+            @Html.DropDownListFor(
+                   m => m.Section_id,
+                   Model.Section_ids.Select(o => new SelectListItem { Value = o.ToString(), Text = o.ToString() }),
+                   "Veuillez sélectionner une section",
+                   new { @class = "form-control", required = true
+                   })
+            @Html.ValidationMessageFor(m => m.Section_id, null, new { @class = "text-danger" })
 
-    </div>
-    <div>
-        <label for="ResultatAnnuel">
-            Résultat annuel:
-        </label>
-        <input type="number" min="0" max="20" name="ResultatAnnuel" id="ResultatAnnuel" required />
-        @{ CheckErrors("ResultatAnnuel"); }
+        </div>
+        <div>
 
-    </div>
-    <div>
-        <label for="Section_id">
-            Section :
-        </label>
-        <select name="Section_id" id="Section_id" required>
-            @foreach (int s_id in Model.Section_ids)
-            {
-                <option>@s_id</option>
-            }
-        </select>
-        @{ CheckErrors("Section_id"); }
+            @Html.LabelFor(m => m.Course_id)
+            @Html.DropDownListFor(
+                   m => m.Course_id,
+                   Model.Course_ids.Select(o => new SelectListItem { Value = o, Text = o }),
+                   "Veuillez sélectionner un cours",
+                   new { @class = "form-control", required = true
+                   })
+            @Html.ValidationMessageFor(m => m.Course_id, null, new { @class = "text-danger" })
 
-    </div>
-    <div>
-        <label for="Course_id">
-            Course :
-        </label>
-        <select name="Course_id" id="Course_id" required>
-            @foreach (string c_id in Model.Course_ids)
-            {
-                <option>@c_id</option>
-            }
-        </select>
-        @{ CheckErrors("Course_id"); }
 
-    </div>
-    <div>
-        <input type="submit" value="Ajouter l'étudiant" />
-    </div>
-</form>
+        </div>
+        <div>
+            <input type="submit" value="Ajouter l'étudiant" />
+        </div>
+    }
 }
 else
 {
