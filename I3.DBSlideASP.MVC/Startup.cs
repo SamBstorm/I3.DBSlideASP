@@ -25,6 +25,7 @@ namespace I3.DBSlideASP.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRepository<Student>, StudentService>();
+            services.AddScoped<IRepository<Professor>, ProfessorService>();
             services.AddControllersWithViews();
         }
 
