@@ -60,5 +60,17 @@ namespace I3.DBSlideASP.MVC.Handlers
                 Login = form.Identifiant
             };
         }
+
+        public static ProfessorListItem ToListItem(this Professor entity)
+        {
+            if (entity is null) return null;
+            return new ProfessorListItem
+            {
+                Professor_Id = entity.Professor_ID,
+                Professor_Name = entity.Professor_Name,
+                Professor_Surname = entity.Professor_Surname,
+                Section_Id = entity.Section_ID
+            };
+        }
     }
 }
