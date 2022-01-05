@@ -72,5 +72,60 @@ namespace I3.DBSlideASP.MVC.Handlers
                 Section_Id = entity.Section_ID
             };
         }
+
+        public static ProfessorDetails ToDetails(this Professor entity)
+        {
+            if (entity is null) return null;
+            return new ProfessorDetails
+            {
+                Professor_Id = entity.Professor_ID,
+                Professor_Name = entity.Professor_Name,
+                Professor_Surname = entity.Professor_Surname,
+                Section_ID = entity.Section_ID,
+                Professor_Email = entity.Professor_Email,
+                Professor_HireDate = entity.Professor_HireDate,
+                Professor_Office = entity.Professor_Office,
+                Professor_Wage = entity.Professor_Wage
+            };
+        }
+
+        public static ProfessorDeleteForm ToDeleteForm(this Professor entity)
+        {
+            if (entity is null) return null;
+            return new ProfessorDeleteForm
+            {
+                Professor_Name = entity.Professor_Name,
+                Professor_Surname = entity.Professor_Surname,
+                Professor_Email = entity.Professor_Email
+            };
+        }
+
+        public static ProfessorEditForm ToEditForm(this Professor entity)
+        {
+            if (entity is null) return null;
+            return new ProfessorEditForm
+            {
+                Professor_Name = entity.Professor_Name,
+                Professor_Surname = entity.Professor_Surname,
+                Professor_Office = entity.Professor_Office,
+                Professor_Wage = entity.Professor_Wage
+            };
+        }
+
+        public static Professor ToDTO(this ProfessorDetails entity)
+        {
+            if (entity is null) return null;
+            return new Professor
+            {
+                Professor_ID = entity.Professor_Id,
+                Professor_Name = entity.Professor_Name,
+                Professor_Surname = entity.Professor_Surname,
+                Section_ID = entity.Section_ID,
+                Professor_Email = entity.Professor_Email,
+                Professor_HireDate = entity.Professor_HireDate,
+                Professor_Office = entity.Professor_Office,
+                Professor_Wage = entity.Professor_Wage
+            };
+        }
     }
 }

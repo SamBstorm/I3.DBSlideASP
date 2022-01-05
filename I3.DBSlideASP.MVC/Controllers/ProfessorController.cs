@@ -51,7 +51,18 @@ namespace I3.DBSlideASP.MVC.Controllers
         // GET: ProfessorController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                ProfessorDetails model = this._service.Get(id).ToDetails();
+                if (model is null) throw new ArgumentOutOfRangeException(nameof(id),"Identifiant non compris dans la liste.");
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         
@@ -79,42 +90,73 @@ namespace I3.DBSlideASP.MVC.Controllers
         // GET: ProfessorController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            try
+            {
+                ProfessorEditForm model = this._service.Get(id).ToEditForm();
+                if (model is null) throw new ArgumentOutOfRangeException(nameof(id), "Identifiant non compris dans la liste.");
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return RedirectToAction(nameof(Index));                
+            }
         }
 
         // POST: ProfessorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, ProfessorEditForm collection)
         {
             try
             {
+                ProfessorDetails result = this._service.Get(id).ToDetails();
+                if (result is null) throw new ArgumentOutOfRangeException(nameof(id), "Identifiant non compris dans la liste.");
+                if (!ModelState.IsValid) throw new ArgumentException("Formulaire erroné");
+                result.Professor_Office = collection.Professor_Office;
+                result.Professor_Wage = collection.Professor_Wage;
+                this._service.Update(id, result.ToDTO());
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Error = e.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
         // GET: ProfessorController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                ProfessorDeleteForm model = this._service.Get(id).ToDeleteForm();
+                if (model is null) throw new ArgumentOutOfRangeException(nameof(id), "Identifiant non compris dans la liste.");
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = e.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: ProfessorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, ProfessorDeleteForm collection)
         {
             try
             {
+                ProfessorDeleteForm model = this._service.Get(id).ToDeleteForm();
+                if (model is null) throw new ArgumentOutOfRangeException(nameof(id), "Identifiant non compris dans la liste.");
+                this._service.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                ViewBag.Error = e.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
     }
