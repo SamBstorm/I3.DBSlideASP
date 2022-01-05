@@ -24,6 +24,7 @@ namespace I3.DBSlideASP.MVC.Controllers
         // GET: Professor/Index?primarySort=section
         public ActionResult Index(string primarySort)
         {
+            if (TempData.ContainsKey("Error")) TempData.Keep();
             IEnumerable<ProfessorListItem> model = this._service.Get()
                                                     .Select(p => p.ToListItem());
             if (primarySort is null)
@@ -59,7 +60,7 @@ namespace I3.DBSlideASP.MVC.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = e.Message;
+                TempData["Error"] = e.Message;
                 return RedirectToAction(nameof(Index));
             }
 
@@ -98,7 +99,7 @@ namespace I3.DBSlideASP.MVC.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = e.Message;
+                TempData["Error"] = e.Message;
                 return RedirectToAction(nameof(Index));                
             }
         }
@@ -120,7 +121,7 @@ namespace I3.DBSlideASP.MVC.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = e.Message;
+                TempData["Error"] = e.Message;
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -136,7 +137,7 @@ namespace I3.DBSlideASP.MVC.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = e.Message;
+                TempData["Error"] = e.Message;
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -155,7 +156,7 @@ namespace I3.DBSlideASP.MVC.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Error = e.Message;
+                TempData["Error"] = e.Message;
                 return RedirectToAction(nameof(Index));
             }
         }
